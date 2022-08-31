@@ -2,7 +2,7 @@
 name: "garlicoin-osx-0.17"
 enable_cache: true
 suites:
-- "trusty"
+- "bionic"
 architectures:
 - "amd64"
 packages:

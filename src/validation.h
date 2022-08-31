@@ -148,6 +148,15 @@ static const bool DEFAULT_PEERBLOOMFILTERS = true;
 
 /** Default for -stopatheight */
 static const int DEFAULT_STOPATHEIGHT = 0;
+/** Default for -maxreorgdepth */
+static const int DEFAULT_MAX_REORG_DEPTH = 15;
+/**
+ * Default for -finalizationdelay
+ * This is the minimum time between a block header reception and the block
+ * finalization.
+ * This value should be >> block propagation and validation time
+ */
+static const int64_t DEFAULT_MIN_FINALIZATION_DELAY = 5 * 60;
 
 struct BlockHasher
 {
@@ -428,6 +437,8 @@ public:
 /** Replay blocks that aren't fully applied to the database. */
 bool ReplayBlocks(const CChainParams& params, CCoinsView* view);
 
+CBlockIndex* LookupBlockIndex(const uint256& hash);
+
 /** Find the last common block between the parameter chain and a locator. */
 CBlockIndex* FindForkInGlobalIndex(const CChain& chain, const CBlockLocator& locator);
 
@@ -439,6 +450,23 @@ bool InvalidateBlock(CValidationState& state, const CChainParams& chainparams, C
 
 /** Remove invalidity status from a block and its descendants. */
 bool ResetBlockFailureFlags(CBlockIndex *pindex);
+
+/**
+ * Mark a block as finalized.
+ * A finalized block can not be reorged in any way.
+ */
+bool FinalizeBlockAndInvalidate(CValidationState &state, CBlockIndex *pindex) EXCLUSIVE_LOCKS_REQUIRED(cs_main);
+
+/**
+ * Retrieve the topmost finalized block.
+ */
+const CBlockIndex *GetFinalizedBlock();  // EXCLUSIVE_LOCKS_REQUIRED(cs_main)
+
+/**
+ * Checks if a block is finalized.
+ */
+bool IsBlockFinalized(const CBlockIndex *pindex);  // EXCLUSIVE_LOCKS_REQUIRED(cs_main);
+
 
 /** The currently-connected chain of blocks (protected by cs_main). */
 extern CChain& chainActive;
@@ -473,6 +501,14 @@ int32_t ComputeBlockVersion(const CBlockIndex* pindexPrev, const Consensus::Para
 static const unsigned int REJECT_INTERNAL = 0x100;
 /** Too high fee. Can not be triggered by P2P transactions */
 static const unsigned int REJECT_HIGHFEE = 0x100;
+
+/**
+ * Reject codes greater or equal to this can be returned by AcceptToMemPool or
+ * AcceptBlock for blocks/transactions, to signal internal conditions. They
+ * cannot and should not be sent over the P2P network.
+ */
+/** Block conflicts with a transaction already known */
+static const unsigned int REJECT_AGAINST_FINALIZED = 0x103;
 
 /** Get block file info entry for one block file */
 CBlockFileInfo* GetBlockFileInfo(size_t n);
