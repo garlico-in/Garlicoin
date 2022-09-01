@@ -1,5 +1,5 @@
 ---
-name: "garlicoin-core-linux-0.21"
+name: "garlicoin-core-linux-0.18"
 enable_cache: true
 distro: "ubuntu"
 suites:

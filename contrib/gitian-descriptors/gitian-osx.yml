@@ -1,5 +1,5 @@
 ---
-name: "garlicoin-osx-0.17"
+name: "garlicoin-core-osx-0.18"
 enable_cache: true
 suites:
 - "bionic"
