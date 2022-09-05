@@ -17,9 +17,9 @@
                 "reqSigs": 2,
                 "type": "multisig",
                 "addresses": [
-                    "La2DHFRvKvGwR78JkkMCzEw6BJUrSQa72A",
-                    "LZkrFMdJCxcpf2fSorE4MJHUNZGfAnD7gf",
-                    "LNZrr8v1gBobYuA3ABbTkRnuf7n5RRo5Cz"
+                    "GYeBSAT3E7eBEmjSWZ228zDDtFuRGUN6Dd",
+                    "GYNpQGeR79z4UhGaZetsW3Zc5WhE7g1uwB",
+                    "GMBq13w8aPAqNZmAuzGGuB53N5CeM5MHdP"
                 ]
             }
         }
