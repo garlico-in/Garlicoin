@@ -276,8 +276,8 @@ public:
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 1.4 * 24 * 60 * 60; // 1.4 days
-        consensus.nPowTargetSpacing = 1 * 60; // 60 seconds
+        consensus.nPowTargetTimespan = 60 * 60; // 1.4 days
+        consensus.nPowTargetSpacing = 40; // 40 seconds
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
@@ -293,10 +293,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00");
+        consensus.nMinimumChainWork = uint256{};
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00");
+        consensus.defaultAssumeValid = uint256{};
 
         pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xbf;
@@ -306,10 +306,10 @@ public:
         nPruneAfterHeight = 1000;
 
         //todo: first argument is current epoch time. this should be epoch time of alpha release, to be fair. change later
-        genesis = CreateGenesisBlock(1515002093, 3606002, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1662619162, 1, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0xe99da841b29de092a847214f1af5abf6ef38a50f607081b09692177555e5855e"));
-        assert(genesis.hashMerkleRoot == uint256S("0xc33614a63c5382f71967c273f8f573faa5b09ed87620ea89504982118bd5e5b5"));
+        assert(consensus.hashGenesisBlock == uint256S("0xf7a36e5f2d7328c50c2341e7b4529bbf50e91b44cbddcd0d617d0c95c651d1f3"));
+        assert(genesis.hashMerkleRoot == uint256S("0x5f32b33db6dcab182dfad55b3d04b2978c1598cf82519835e000dd77e37f3aa8"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
 
@@ -321,13 +321,13 @@ public:
 
         checkpointData = {
             {
-                //{0, uint256S("530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9")},
+                {0, uint256S("f7a36e5f2d7328c50c2341e7b4529bbf50e91b44cbddcd0d617d0c95c651d1f3")},
             }
         };
 
         chainTxData = ChainTxData{
-            1515002093,
-            1,
+            0,
+            0,
             0
         };
 
