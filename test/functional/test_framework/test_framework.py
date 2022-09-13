@@ -221,7 +221,7 @@ class BitcoinTestFramework():
             self.nodes.append(TestNode(i, self.options.tmpdir, extra_args[i], rpchost, timewait=timewait, binary=binary[i], stderr=None, mocktime=self.mocktime, coverage_dir=self.options.coveragedir, use_cli=self.options.usecli))
 
     def start_node(self, i, *args, **kwargs):
-        """Start a litecoind"""
+        """Start a garlicoind"""
 
         node = self.nodes[i]
 
@@ -232,7 +232,7 @@ class BitcoinTestFramework():
             coverage.write_all_rpc_commands(self.options.coveragedir, node.rpc)
 
     def start_nodes(self, extra_args=None, *args, **kwargs):
-        """Start multiple litecoinds"""
+        """Start multiple garlicoinds"""
 
         if extra_args is None:
             extra_args = [None] * self.num_nodes
@@ -252,12 +252,12 @@ class BitcoinTestFramework():
                 coverage.write_all_rpc_commands(self.options.coveragedir, node.rpc)
 
     def stop_node(self, i):
-        """Stop a litecoind test node"""
+        """Stop a garlicoind test node"""
         self.nodes[i].stop_node()
         self.nodes[i].wait_until_stopped()
 
     def stop_nodes(self):
-        """Stop multiple litecoind test nodes"""
+        """Stop multiple garlicoind test nodes"""
         for node in self.nodes:
             # Issue RPC to stop nodes
             node.stop_node()
@@ -277,7 +277,7 @@ class BitcoinTestFramework():
                 self.start_node(i, extra_args, stderr=log_stderr, *args, **kwargs)
                 self.stop_node(i)
             except Exception as e:
-                assert 'litecoind exited' in str(e)  # node must have shutdown
+                assert 'garlicoind exited' in str(e)  # node must have shutdown
                 self.nodes[i].running = False
                 self.nodes[i].process = None
                 if expected_msg is not None:
@@ -444,7 +444,7 @@ class BitcoinTestFramework():
 class ComparisonTestFramework(BitcoinTestFramework):
     """Test framework for doing p2p comparison testing
 
-    Sets up some litecoind binaries:
+    Sets up some garlicoind binaries:
     - 1 binary: test binary
     - 2 binaries: 1 test binary, 1 ref binary
     - n>2 binaries: 1 test binary, n-1 ref binaries"""
